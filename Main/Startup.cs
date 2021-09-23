@@ -1,3 +1,4 @@
+using Domain.Interfaces;
 using Main.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Repository;
 
 namespace Main
 {
@@ -26,6 +28,8 @@ namespace Main
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Main", Version = "v1" });
 			});
 			services.ConfigureDbConnection(Configuration);
+			services.AddScoped<IRepositoryManager, RepositoryManager>();
+			services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
